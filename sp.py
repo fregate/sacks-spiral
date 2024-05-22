@@ -16,6 +16,8 @@
 
 ########################
 
+# https://pyx-project.org/examples/drawing/index.html
+
 
 from pyx import *
 from math import *
@@ -26,6 +28,7 @@ ca = canvas.canvas()
 
 prx = 0
 pry = 0
+what = {}
 for j in range(n):   
     i = j + 1
     r = sqrt(i)
@@ -33,16 +36,23 @@ for j in range(n):
     x = cos(theta) * r
     y = -sin(theta) * r
     factors = divisors(i)
-    # factors = factor(i)
-    if (len(factors) <= 2):
-        ca.fill(path.circle(x, y, 0.5))
-    if sqrt(i) == isqrt(i) and i != 1:
-        ca.stroke(path.circle(x, y, 0.3))
+
     if j > 0:
-        ca.stroke(path.line(prx, pry, x, y))
-        # draw arc from prev to current
-        pass
+        ca.stroke(path.line(prx, pry, x, y), [
+                style.linewidth(0.01), color.gray(0.9)])
+        what["func"](what["path"])
+
+    if (len(factors) <= 2):
+        what["path"] = path.circle(x, y, 0.45)
+        what["func"] = ca.fill
+
+    if sqrt(i) == isqrt(i) and i != 1:
+        what["path"] = path.circle(x, y, 0.3)
+        what["func"] = ca.stroke
+
     prx = x
     pry = y
+
+what["func"](what["path"])
 
 ca.writePDFfile("sp")
