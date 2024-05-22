@@ -38,9 +38,10 @@ for j in range(n):
     factors = divisors(i)
 
     if j > 0:
-        ca.stroke(path.line(prx, pry, x, y), [
-                style.linewidth(0.01), color.gray(0.9)])
-        what["func"](what["path"])
+        ca.stroke(path.line(prx, pry, x, y), [style.linewidth(0.01), color.gray(0.9)])
+        if what.__contains__("func"):
+            what["func"](what["path"])
+            what = {}
 
     if (len(factors) <= 2):
         what["path"] = path.circle(x, y, 0.45)
